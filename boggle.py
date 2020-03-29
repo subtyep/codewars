@@ -1,4 +1,4 @@
-def boggle(board, word):
+def find_word(board, word):
     # list to keep track of what letters we have used in our search
     usedLetters = []
 
@@ -53,12 +53,15 @@ def boggle(board, word):
     # get all the spots with the first letter of the word
     startingLetters = [starts for starts in letters if starts[2] == word[0]]
 
+    # check for the simple case that the word is one letter long
+    if len(word) == 1 and len(startingLetters) > 0:
+        return True
+
     for startingLetter in startingLetters:
         # mark this letter as used
         usedLetters.append(startingLetter)
         if get_next_letter(startingLetter, 1):
             # we did it!
-            print(usedLetters)
             return True
         else:
             # this letter did't work out
@@ -68,9 +71,19 @@ def boggle(board, word):
     return False
 
 
+#testing, not part of solution
 theBoard = \
-    [["I", "L", "A", "W"],
-     ["B", "N", "G", "E"],
-     ["I", "U", "A", "S"],
-     ["N", "G", "O", "O"]]
-print(boggle(theBoard, 'BINGO'))
+    [
+        ["E", "A", "R", "A"],
+        ["N", "L", "E", "C"],
+        ["I", "A", "I", "S"],
+        ["B", "Y", "O", "R"]
+    ]
+
+print(find_word(theBoard, "C"))#, True, "Test for C")
+print(find_word(theBoard, "EAR"))#, True, "Test for EAR")
+print(find_word(theBoard, "EARS"))#, False, "Test for EARS")
+print(find_word(theBoard, "BAILER"))#, True, "Test for BAILER")
+print(find_word(theBoard, "RSCAREIOYBAILNEA"))#, True, "Test for RSCAREIOYBAILNEA")
+print(find_word(theBoard, "CEREAL"))#, False, "Test for CEREAL")
+print(find_word(theBoard, "ROBES"))#, False, "Test for ROBES")
